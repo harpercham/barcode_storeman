@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include partials/head %>
+</head>
+
+<!--table style-->
+
+
+
+
+
+<body>
+
+  <div class="container-fluid bg-3 text-center">
+    <h3>Inventory System (storeman)</h3><br>
+    <form action='/check' method='post' id="checkform">
+      <label for="barcode">Barcode:</label>
+      <input type="text" id="barcode" name="barcode">
+      <button style="background-color: #4CAF50;color:white" type="submit">check</button>
+      <button style="background-color: red;color:white" type="button"
+        onclick="window.location=('https://forms.gle/SGpmvjs2qfPJREPH6')">create</button>
+
+    </form>
+
+    <br>
+    <form id="queryForm">
+      <label for="barcode">Query:</label>
+      <input id="keyword" name="keyword">
+      <button type="button" onclick="queryGo()">search</button>
+      <button type="button" onclick="clearText()">clear</button>
+      <button type="button"
+        onclick="window.open('https://docs.google.com/spreadsheets/d/e/2PACX-1vSp-boJ1ohWc99Jy62HTXASIBFjjX67Yq33UzFINDtODpt7mTzvFZYCg55FjNwe9FFQRgEmi4zLb5U4/pubhtml?gid=1831516076&single=true')">all
+        items</button>
+    </form>
+
+    <br>
+    <div>Logistics records:
+      <button style="color:rgb(10, 108, 126)" onclick="showRecord()">show</button>
+      <button style="color:rgb(10, 108, 126)" onclick="clearAll()">clear all</button>
+      <iframe style="display:none" id="logisticsResult" width="100%" height="500px"
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSp-boJ1ohWc99Jy62HTXASIBFjjX67Yq33UzFINDtODpt7mTzvFZYCg55FjNwe9FFQRgEmi4zLb5U4/pubhtml?gid=1143427202&single=true"></iframe>
+    </div>
+    <br>
+
+    <iframe id="queryResult" style="display:none" width="100%" height="500px"
+      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSp-boJ1ohWc99Jy62HTXASIBFjjX67Yq33UzFINDtODpt7mTzvFZYCg55FjNwe9FFQRgEmi4zLb5U4/pubhtml?gid=1143427202&single=true"></iframe>
+
+    <div id="tableDIV" style="overflow-x:auto;">
+      <table id="myTable"></table>
+    </div>
+
+</body>
+
+<script>
+
+
+  function clearText() {
+    document.getElementById("keyword").value = "";
+    document.getElementsByTagName("thead")[0].remove();
+  }
+
+  function queryGo() {
+
+    var keyword = (document.getElementById("keyword").value).toUpperCase();;
+    var stringID = ((("https://spreadsheets.google.com/tq?tqx=out:html&tq=SELECT%20F%2C%20H%2C%20I%2C%20J%2C%20K%20WHERE%20(UPPER(I)%20CONTAINS%20%27".concat(keyword)).concat("%27)%20OR%20(UPPER(K)%20CONTAINS%20%27")).concat(keyword)).concat('%27)%0A%0A')
+    var keyID = "&key=1lv8H2Nsij3yTbePxkd54Q1y9ubPAd_NmYW1H1c0p1N4";
+    var url = stringID.concat(keyID);
+    var iframe = document.getElementById("queryResult");
+    iframe.src = url;
+    iframe.style.display = "block";
+
+
+  };
+
+  function showRecord() {
+    var iframe = document.getElementById("logisticsResult");
+    var elmnt = iframe;
+    elmnt.style.display = "block";
+  };
+  function clearAll() {
+    var iframe1 = document.getElementsByTagName("iframe")[0];
+    var iframe2 = document.getElementsByTagName("iframe")[1];
+    iframe1.style.display = "none";
+    iframe2.style.display = "none";
+    document.getElementById("keyword").value = "";
+    document.getElementById("barcode").value = "";
+
+  }
+
+
+</script>
+
+<% include partials/script %>
+
+</html>
