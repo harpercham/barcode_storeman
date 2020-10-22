@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var index = require('./routes/index');
-var item = require('./routes/item');
+var stock = require('./routes/stock');
 var app = express();
 
 
@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 app.use('/', index);
-app.use('/', item);
+app.use('/', stock);
 
 
 // catch 404 and forward to error handler
